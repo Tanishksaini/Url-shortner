@@ -8,7 +8,7 @@ import SignUp from '@/components/SignUp'
 const Auth = () => {
   const[searchParams]=useSearchParams()
   return (
-    <div className='mt-36 flex flex-col items-center gap-10'>
+    <div className='mt-32 flex flex-col items-center gap-10'>
       <h1 className='text-5xl font-extrabold'>{searchParams.get("createNew")?"Hold Up ! Lets Login frist....":"Login/SignUp"
 }</h1>
 <Tabs defaultValue="Login" className="w-[400px]">

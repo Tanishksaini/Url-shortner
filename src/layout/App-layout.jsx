@@ -9,7 +9,7 @@ const AppLayout = () => {
            <Header/>
             <Outlet/>
         </main>
-        <div className='p-8 text-center bg-gray-800 mt-10'> 
+        <div className='p-8 text-center bg-gray-800 mt-10 '> 
             Made With ❤️  By Tanishk 
         </div>
     </div>
