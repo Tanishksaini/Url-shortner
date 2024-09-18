@@ -20,7 +20,7 @@ import {BeatLoader} from "react-spinners";
 import {UrlState} from "@/context";
 import {QRCode} from "react-qrcode-logo";
 
-export function CreateLink() {
+export default function CreateLink() {
   const {user} = UrlState();
   const URL = import.meta.env.VITE_URL_SHORT;
   const navigate = useNavigate();
