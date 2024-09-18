@@ -14,7 +14,9 @@ import { Eye, EyeOff } from "lucide-react";
 import Error from "./Error";
 import * as Yup from "yup";
 import useFetch from "@/hooks/useFetch";
-import { login } from "@/DB/apiAuth";
+import { login} from "@/DB/apiAuth";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { UrlState } from "@/context";
 
 const LogIn = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -24,6 +26,10 @@ const LogIn = () => {
     email: "",
     password: "",
   });
+  const navigate=useNavigate()
+  
+  let [searchParams]=useSearchParams()
+  const longLink=searchParams.get("createNew")
   const handleChangeInput = (e) => {
     const { name, value } = e.target;
     setFormData((prevState) => ({
@@ -31,12 +37,15 @@ const LogIn = () => {
       [name]: value,
     }));
   };
-  const{data, loading , error,fn:fnLogIn}=useFetch(login,formdata);
-  useEffect(()=>{
-  console.log(data);
-  },[data,error])
+  const {loading, error, fn: fnLogin, data} = useFetch(login,formdata);
+  const {fetchUser}=UrlState()
+ useEffect(()=>{
+  if (error===null&&data) {
+    navigate(`/dashboard?${longLink ?`creatNew=${longLink}`:""}`)
+    fetchUser();
+  }
+ },[data,error])
   const handleLogIn = async () => {
-    console.log("hii");
     setErrors([]);
     try {
       const schema = Yup.object().shape({
@@ -44,11 +53,11 @@ const LogIn = () => {
           .email("Invalid email")
           .required("Email is required"),
           password: Yup.string()
-          .required('Password is required').min(6, 'Password must be at least 6 characters long'),
+          .required('Password is required').min(6, 'Password must be at least 6 characters long').max(12,"Password not more than 12 characters"),
       });
      
       await schema.validate(formdata, { abortEarly: false });
-      await fnLogIn();
+      await fnLogin();
     } catch (e) {
       const newErrors = {};
 
@@ -76,6 +85,7 @@ const LogIn = () => {
         <CardDescription>To your account have if you have one</CardDescription>
       </CardHeader>
       <CardContent className="space-y-2">
+      <form>
         <div className="space-y-1 mb-2  w-[100%]">
           <Input
             name="email"
@@ -106,10 +116,11 @@ const LogIn = () => {
           </span>
         </div>
         {errors.password && <Error message={errors.password} />}
+        </form>
       </CardContent>
       <CardFooter>
         <Button onClick={handleLogIn}>
-          {loading ? <ScaleLoader /> : "LogIn"}
+          {loading ? <ScaleLoader size={10} color="#36d7b7" /> : "LogIn"}
         </Button>
       </CardFooter>
     </Card>

@@ -62,5 +62,12 @@
   body {
     @apply bg-background text-foreground;
   }
+} 
+@media only screen and (max-width: 1000px) {
+  body{
+    padding: 1em;
+    font-size: 0.8rem;
+  }
 }
+
 

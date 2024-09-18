@@ -31,8 +31,8 @@ const LandingPage = () => {
           className="h-full flex-1 py-4 px-4"/>
         <Button className="h-full" type="submit" variant= "destructive">Shorten</Button>
       </form>
-      <img src="./banner.jpeg" alt="Banner Image" className="w-full my-11 md:px-11"/>
-      <Accordion type="multiple" collapsible className="w-full md:px-11"> 
+      <img src="./banner.jpeg" alt="Banner Image" className="w-full my-12 md:px-11"/>
+      <Accordion type="multiple"  className="w-full md:px-11"> 
       <AccordionItem value="item-1">
           <AccordionTrigger>
             How does the Trimrr URL shortener works?

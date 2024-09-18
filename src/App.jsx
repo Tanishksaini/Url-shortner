@@ -1,11 +1,12 @@
-import { Children, useState } from 'react'
-import { createBrowserRouter, Link, RouterProvider } from 'react-router-dom'
+import UrlProvider from"./context"
+import { createBrowserRouter,  RouterProvider } from 'react-router-dom'
 import AppLayout from './layout/App-layout'
 import LandingPage from './pages/LandingPage'
 import Dashboard from './pages/Dashboard'
-import Auth from './pages/auth'
 import Links from './pages/links'
 import Redirect from './pages/Redirect'
+import RequireAuth from "./components/requireAuth"
+import Auth from "./pages/Auth"
 
 
 
@@ -19,7 +20,7 @@ const router= createBrowserRouter([
       },
       {
         path:"/dashboard",
-        element:<Dashboard/>
+        element:<RequireAuth><Dashboard/></RequireAuth>
       },
       {
         path:"/auth",
@@ -27,11 +28,11 @@ const router= createBrowserRouter([
       },
       {
         path:"/link/:id",
-        element:<Links/>
+        element:<RequireAuth><Links/></RequireAuth>
       },
       {
         path:":id",
-        element:<Redirect/>
+        element:<RequireAuth><Redirect/></RequireAuth>
       }
     ]
   }
@@ -39,8 +40,9 @@ const router= createBrowserRouter([
 function App() {
 
   return (
-   <RouterProvider router={router}/>
-  
+    <UrlProvider>
+    <RouterProvider router={router} />
+  </UrlProvider>
   )
 }
 
