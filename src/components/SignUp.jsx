@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import Error from "./error";
 import { Input } from "./ui/input";
 import * as Yup from "yup";
 import {
@@ -16,7 +15,7 @@ import { signup } from "@/DB/apiAuth";
 import { ScaleLoader } from "react-spinners";
 import { Eye, EyeOff } from "lucide-react";
 import useFetch from "@/hooks/useFetch";
-
+import Error from "./Error";
 const Signup = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [password, setPassword] = useState("");
