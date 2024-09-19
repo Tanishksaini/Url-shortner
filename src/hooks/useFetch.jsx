@@ -13,7 +13,6 @@ function useFetch(cb, option) {
     setData(response);
       setError(null);
     } catch (error) {
-      console.log(error);
       setError(error);
     } finally {
       setLoading(false);

@@ -1,5 +1,5 @@
 import supabase from "./supabase";
-
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 export async function getUrls(user_id) {
   let {data, error} = await supabase
     .from("urls")
@@ -46,7 +46,8 @@ export async function getLongUrl(id) {
 }
 
 export async function createUrl({title, longUrl, customUrl, user_id}, qrcode) {
-  const short_url = Math.random().toString(36).substr(2, 6);
+  
+  const short_url = Math.random().toString(36).substring(2,6);
   const fileName = `qr-${short_url}`;
 
   const {error: storageError} = await supabase.storage
@@ -58,18 +59,18 @@ export async function createUrl({title, longUrl, customUrl, user_id}, qrcode) {
   const qr = `${supabaseUrl}/storage/v1/object/public/qrs/${fileName}`;
 
   const {data, error} = await supabase
-    .from("urls")
-    .insert([
-      {
-        title,
-        user_id,
-        original_url: longUrl,
-        custom_url: customUrl || null,
-        short_url,
-        qr,
-      },
-    ])
-    .select();
+  .from("urls")
+  .insert([
+    {
+      title,
+      user_id,
+      original_url: longUrl,
+      custom_url: customUrl || null,
+      short_url,
+      qr,
+    },
+  ])
+  .select();
 
   if (error) {
     console.error(error);

@@ -19,6 +19,7 @@ import {BeatLoader} from "react-spinners";
 import {UrlState} from "@/context";
 import {QRCode} from "react-qrcode-logo";
 import Error from "./Error";
+
 export default function CreateLink() {
   const {user} = UrlState();
   const URL = import.meta.env.VITE_URL_SHORT;
@@ -56,11 +57,12 @@ export default function CreateLink() {
     error,
     data,
     fn: fnCreateUrl,
-  } = useFetch(createUrl, {...formValues, user_id: user.id});
-
+} = useFetch(createUrl, {...formValues, user_id: user.id});
+ 
   useEffect(() => {
     if (error === null && data) {
-      navigate(`/link/${data[0].id}`);
+      console.log(data);
+      navigate(`${URL}/link/${data[0].id}`);
     }
     
   }, [error, data]);
